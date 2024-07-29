@@ -5,10 +5,17 @@ import User from '../src/models/user.js';
 
 export const jwtSecret = "userAuth";
 
+const validateEmail = (email) => {
+    const emailRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return emailRegex.test(email);
+}
+
+
 export const signup = async (req, res) => {
     const {name, email, password} = req.body;
 
     try{
+        if(!validateEmail(email))res.status(400).json ({message: "Invalid email"});
         let user = User.findOne(req.body);
         // if(user) return res.status(400).json({message:"User already present"});
 
