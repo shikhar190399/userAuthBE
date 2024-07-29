@@ -15,7 +15,7 @@ export const signup = async (req, res) => {
     const {name, email, password} = req.body;
 
     try{
-        if(!validateEmail(email))res.status(400).json ({message: "Invalid email"});
+        if(!validateEmail(email))return res.status(400).json ({message: "Invalid email"});
         let user = User.findOne(req.body);
         // if(user) return res.status(400).json({message:"User already present"});
 
